@@ -1,6 +1,6 @@
 # hello
 
-A warm `hello alex` greeting with a small, continuously rotating Three.js torus
+A blue `hello alex` greeting with a small, continuously rotating Three.js torus
 knot on the same page. The responsive layout keeps the greeting readable and
 places the decorative scene below it on mobile.
 
@@ -42,20 +42,22 @@ npm run test:browser
 ```
 
 The browser suite starts its own local server on port 8000; stop any existing
-server first. It checks the visible greeting, scene bounds and separation from
-the heading at desktop and mobile widths, changing canvas screenshots without
+server first. It checks that all visible text is blue, the visible greeting,
+scene bounds and separation from the heading at desktop and mobile widths, changing canvas screenshots without
 input, restart after reload, and JavaScript errors. Chrome's sandbox stays
 enabled. Browser tests are a separate host-only suite; they are not included in
 the Python suite and are not reported as passing when unavailable.
 
 Before deployment, open the page at desktop and mobile widths, confirm
-`hello alex` is readable, watch the Three.js canvas move, then reload once and
-confirm motion starts again.
+all text (including `hello alex` and its period) is blue and readable, watch the
+Three.js canvas move, then reload once and confirm motion starts again.
 
 ### Validation in the implementation environment
 
-The three Python tests passed. Browser tests could not execute: the restricted
-execution environment aborted Chrome during launch. The alternative host
-browser tool also required unavailable approval. Browser animation, reload,
-and visual validation remain pending on an authorized host before deployment;
-no browser tests are claimed as passed or skipped.
+For issue #5, all three Python tests passed. The two host-only browser tests
+were attempted, but Chrome aborted during launch (`SIGABRT`) in the restricted
+execution environment before any page assertions ran. Neither browser test
+passed or was skipped. The suite now checks computed blue text colors at both
+viewport sizes and after reload, alongside the existing layout and motion checks.
+Browser color, readability, animation, and reload validation remain pending on
+an authorized host before deployment. Chrome's sandbox remains enabled.

@@ -9,6 +9,13 @@ for (const viewport of [{ width: 1280, height: 900 }, { width: 390, height: 844 
 
     for (let load = 0; load < 2; load++) {
       await expect(page.getByRole('heading', { name: 'hello alex.' })).toBeVisible();
+      // Check inherited colors and explicit accents on every text-bearing element.
+      const textColors = await page.locator('body *').evaluateAll((elements) =>
+        elements.filter((element) => element.getClientRects().length > 0 &&
+          [...element.childNodes].some((node) => node.nodeType === Node.TEXT_NODE &&
+            node.textContent.trim())).map((element) => getComputedStyle(element).color));
+      expect(textColors.length).toBeGreaterThan(0);
+      expect(new Set(textColors)).toEqual(new Set(['rgb(0, 0, 255)']));
       const canvas = page.locator('canvas.scene');
       await expect(canvas).toBeVisible();
       await expect.poll(() => canvas.evaluate((element) => element.width)).toBeGreaterThan(0);
