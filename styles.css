@@ -1,7 +1,7 @@
 :root {
   color-scheme: light;
   font-family: Arial, Helvetica, sans-serif;
-  color: #263d32;
+  color: #0000ff;
   background: #f5f2e9;
 }
 
@@ -27,7 +27,7 @@ body { margin: 0; }
 
 .masthead { min-height: 112px; border-bottom: 1px solid #263d3233; }
 .wordmark { font-size: 19px; font-weight: 700; letter-spacing: -0.7px; }
-.wordmark span { color: #b4442b; margin-left: 6px; }
+.wordmark span { color: inherit; margin-left: 6px; }
 .edition { font-size: 12px; text-transform: uppercase; letter-spacing: 2px; }
 main { flex: 1; display: grid; align-items: center; }
 .greeting { position: relative; padding: 76px 0 90px; }
@@ -35,10 +35,10 @@ main { flex: 1; display: grid; align-items: center; }
 .eyebrow span { width: 7px; height: 7px; border-radius: 50%; background: #b4442b; }
 h1 { width: fit-content; position: relative; z-index: 1; margin: 35px 0 28px; font-size: clamp(88px, 15vw, 220px); font-weight: 500; line-height: 0.94; letter-spacing: -0.075em; }
 h1 > span { display: block; font-family: Georgia, 'Times New Roman', serif; font-style: italic; font-weight: 400; }
-.period { color: #b4442b; }
+.period { color: inherit; }
 .message { margin: 32px 0 0; font-size: clamp(16px, 1.5vw, 20px); line-height: 1.65; }
 .scene { position: absolute; right: 3%; top: 22%; width: clamp(180px, 28vw, 360px); aspect-ratio: 1; pointer-events: none; }
-footer { min-height: 88px; border-top: 1px solid #263d3233; font-size: 12px; color: #526258; }
+footer { min-height: 88px; border-top: 1px solid #263d3233; font-size: 12px; color: inherit; }
 .footer-mark { font-size: 26px; }
 
 @media (max-width: 600px) {
