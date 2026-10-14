@@ -44,6 +44,12 @@ class PageTests(unittest.TestCase):
         self.assertTrue(any(tag == "meta" and attrs.get("name") == "viewport"
                             for tag, attrs in page.elements))
 
+    def test_scene_is_decorative_and_module_is_local(self):
+        page = PageParser()
+        page.feed((ROOT / "index.html").read_text())
+        self.assertIn(("canvas", {"class": "scene", "aria-hidden": "true"}), page.elements)
+        self.assertIn(("script", {"type": "module", "src": "animation.js"}), page.elements)
+
     def test_page_and_styles_are_served(self):
         handler = partial(SimpleHTTPRequestHandler, directory=str(ROOT))
         server = ThreadingHTTPServer(("127.0.0.1", 0), handler)
@@ -58,10 +64,13 @@ class PageTests(unittest.TestCase):
             styles = [attrs["href"] for tag, attrs in page.elements
                       if tag == "link" and attrs.get("rel") == "stylesheet"]
             self.assertEqual(styles, ["styles.css"])
-            for stylesheet in styles:
+            for stylesheet in styles + ["animation.js", "vendor/three/three.module.min.js",
+                                         "vendor/three/three.core.min.js"]:
                 with urlopen(f"{base}/{stylesheet}") as response:
                     self.assertEqual(response.status, 200)
-                    self.assertEqual(response.headers.get_content_type(), "text/css")
+                    if stylesheet.endswith(".css"):
+                        self.assertEqual(response.headers.get_content_type(), "text/css")
+                    self.assertGreater(len(response.read()), 0)
         finally:
             server.shutdown()
             server.server_close()
